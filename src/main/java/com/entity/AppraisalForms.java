@@ -2,46 +2,45 @@ package com.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "AppraisalForms")
 public class AppraisalForms {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "FormID")
 	private int formId;
 
+	@ManyToOne
+	@JoinColumn(name = "EmployeeID")
+	private Employees employee;
+
+	@Column(name = "SubmissionDate")
 	private LocalDate submissionDate;
 
-	private int rating;
-
-	private String comments;
+	// other fields...
 
 	@ManyToOne
-	private Employee reviewer;
+	@JoinColumn(name = "ReviewerID")
+	private Employees reviewer;
 
-	@ManyToOne
-	private Employee employee;
-
+	// Getters and setters
 	public AppraisalForms() {
-
 	}
 
-	public AppraisalForms(int formId, LocalDate submissionDate, int rating, String comments, Employee reviewer,
-			Employee employee) {
-		super();
+	public AppraisalForms(int formId, Employees employee, LocalDate submissionDate, Employees reviewer) {
 		this.formId = formId;
-		this.submissionDate = submissionDate;
-		this.rating = rating;
-		this.comments = comments;
-		this.reviewer = reviewer;
 		this.employee = employee;
+		this.submissionDate = submissionDate;
+		this.reviewer = reviewer;
 	}
 
 	public int getFormId() {
@@ -52,6 +51,14 @@ public class AppraisalForms {
 		this.formId = formId;
 	}
 
+	public Employees getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
+	}
+
 	public LocalDate getSubmissionDate() {
 		return submissionDate;
 	}
@@ -60,42 +67,18 @@ public class AppraisalForms {
 		this.submissionDate = submissionDate;
 	}
 
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-
-	public String getComments() {
-		return comments;
-	}
-
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-
-	public Employee getReviewer() {
+	public Employees getReviewer() {
 		return reviewer;
 	}
 
-	public void setReviewer(Employee reviewer) {
+	public void setReviewer(Employees reviewer) {
 		this.reviewer = reviewer;
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
 	}
 
 	@Override
 	public String toString() {
-		return "AppraisalForms [formId=" + formId + ", submissionDate=" + submissionDate + ", rating=" + rating
-				+ ", comments=" + comments + ", reviewer=" + reviewer + ", employee=" + employee + "]";
+		return "AppraisalForms [formId=" + formId + ", employee=" + employee + ", submissionDate=" + submissionDate
+				+ ", reviewer=" + reviewer + "]";
 	}
 
 }

@@ -2,46 +2,54 @@ package com.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "ApplicationStatus")
 public class ApplicationStatus {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ApplicationID")
 	private int applicationId;
 
+	@ManyToOne
+	@JoinColumn(name = "CandidateID")
+	private CandidateProfiles candidate;
+
+	@ManyToOne
+	@JoinColumn(name = "VacancyID")
+	private Vacancies vacancies;
+
+	@Column(name = "Status")
 	private String status;
 
+	@Column(name = "ApplicationDate")
 	private LocalDate applicationDate;
 
+	@Column(name = "ApplicationNotes")
 	private String applicationNotes;
 
-	@ManyToOne
-	private CandidateProfile candidateProfile;
-
-	@ManyToOne
-	private Vacancie vacancie;
-
+	// Getters and setters
 	public ApplicationStatus() {
-
+		// TODO Auto-generated constructor stub
 	}
 
-	public ApplicationStatus(int applicationId, String status, LocalDate applicationDate, String applicationNotes,
-			CandidateProfile candidateProfile, Vacancie vacancie) {
-
+	public ApplicationStatus(int applicationId, CandidateProfiles candidate, Vacancies vacancies, String status,
+			LocalDate applicationDate, String applicationNotes) {
+		super();
 		this.applicationId = applicationId;
+		this.candidate = candidate;
+		this.vacancies = vacancies;
 		this.status = status;
 		this.applicationDate = applicationDate;
 		this.applicationNotes = applicationNotes;
-		this.candidateProfile = candidateProfile;
-		this.vacancie = vacancie;
 	}
 
 	public int getApplicationId() {
@@ -50,6 +58,22 @@ public class ApplicationStatus {
 
 	public void setApplicationId(int applicationId) {
 		this.applicationId = applicationId;
+	}
+
+	public CandidateProfiles getCandidate() {
+		return candidate;
+	}
+
+	public void setCandidate(CandidateProfiles candidate) {
+		this.candidate = candidate;
+	}
+
+	public Vacancies getVacancies() {
+		return vacancies;
+	}
+
+	public void setVacancies(Vacancies vacancies) {
+		this.vacancies = vacancies;
 	}
 
 	public String getStatus() {
@@ -76,27 +100,11 @@ public class ApplicationStatus {
 		this.applicationNotes = applicationNotes;
 	}
 
-	public CandidateProfile getCandidateProfile() {
-		return candidateProfile;
-	}
-
-	public void setCandidateProfile(CandidateProfile candidateProfile) {
-		this.candidateProfile = candidateProfile;
-	}
-
-	public Vacancie getVacancie() {
-		return vacancie;
-	}
-
-	public void setVacancie(Vacancie vacancie) {
-		this.vacancie = vacancie;
-	}
-
 	@Override
 	public String toString() {
-		return "ApplicationStatus [applicationId=" + applicationId + ", status=" + status + ", applicationDate="
-				+ applicationDate + ", applicationNotes=" + applicationNotes + ", candidateProfile=" + candidateProfile
-				+ ", vacancie=" + vacancie + "]";
+		return "ApplicationStatus [applicationId=" + applicationId + ", candidate=" + candidate + ", vacancies="
+				+ vacancies + ", status=" + status + ", applicationDate=" + applicationDate + ", applicationNotes="
+				+ applicationNotes + "]";
 	}
 
 }

@@ -3,56 +3,65 @@ package com.entity;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Payroll")
 public class Payroll {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "PayrollID")
 	private int payrollId;
 
-	private int salaryMonth;
+	@ManyToOne
+	@JoinColumn(name = "EmployeeID")
+	private Employees employee;
 
+	@Column(name = "SalaryMonth")
+	private String salaryMonth;
+
+	@Column(name = "SalaryYear")
 	private int salaryYear;
 
+	@Column(name = "BasicSalary")
 	private BigDecimal basicSalary;
 
+	@Column(name = "Allowances")
 	private BigDecimal allowances;
 
-	private BigDecimal Deductions;
+	@Column(name = "Deductions")
+	private BigDecimal deductions;
 
+	@Column(name = "NetSalary")
 	private BigDecimal netSalary;
 
-	private LocalDate date;
+	@Column(name = "PaymentDate")
+	private LocalDate paymentDate;
 
-	// Incomplete Code
-	
-	@ManyToOne
-	private Employee employee;
-
+	// Getters and setters
 	public Payroll() {
-
+		// TODO Auto-generated constructor stub
 	}
 
-	public Payroll(int payrollId, int salaryMonth, int salaryYear, BigDecimal basicSalary, BigDecimal allowances,
-			BigDecimal deductions, BigDecimal netSalary, LocalDate date, Employee employee) {
-
+	public Payroll(int payrollId, Employees employee, String salaryMonth, int salaryYear, BigDecimal basicSalary,
+			BigDecimal allowances, BigDecimal deductions, BigDecimal netSalary, LocalDate paymentDate) {
+		super();
 		this.payrollId = payrollId;
+		this.employee = employee;
 		this.salaryMonth = salaryMonth;
 		this.salaryYear = salaryYear;
 		this.basicSalary = basicSalary;
 		this.allowances = allowances;
-		Deductions = deductions;
+		this.deductions = deductions;
 		this.netSalary = netSalary;
-		this.date = date;
-		this.employee = employee;
+		this.paymentDate = paymentDate;
 	}
 
 	public int getPayrollId() {
@@ -63,11 +72,19 @@ public class Payroll {
 		this.payrollId = payrollId;
 	}
 
-	public int getSalaryMonth() {
+	public Employees getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
+	}
+
+	public String getSalaryMonth() {
 		return salaryMonth;
 	}
 
-	public void setSalaryMonth(int salaryMonth) {
+	public void setSalaryMonth(String salaryMonth) {
 		this.salaryMonth = salaryMonth;
 	}
 
@@ -96,11 +113,11 @@ public class Payroll {
 	}
 
 	public BigDecimal getDeductions() {
-		return Deductions;
+		return deductions;
 	}
 
 	public void setDeductions(BigDecimal deductions) {
-		Deductions = deductions;
+		this.deductions = deductions;
 	}
 
 	public BigDecimal getNetSalary() {
@@ -111,27 +128,19 @@ public class Payroll {
 		this.netSalary = netSalary;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getPaymentDate() {
+		return paymentDate;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public Employee getEmp() {
-		return employee;
-	}
-
-	public void setEmp(Employee emp) {
-		this.employee = emp;
+	public void setPaymentDate(LocalDate paymentDate) {
+		this.paymentDate = paymentDate;
 	}
 
 	@Override
 	public String toString() {
-		return "Payroll [payrollId=" + payrollId + ", salaryMonth=" + salaryMonth + ", salaryYear=" + salaryYear
-				+ ", basicSalary=" + basicSalary + ", allowances=" + allowances + ", Deductions=" + Deductions
-				+ ", netSalary=" + netSalary + ", date=" + date + ", employee=" + employee + "]";
+		return "Payroll [payrollId=" + payrollId + ", employee=" + employee + ", salaryMonth=" + salaryMonth
+				+ ", salaryYear=" + salaryYear + ", basicSalary=" + basicSalary + ", allowances=" + allowances
+				+ ", deductions=" + deductions + ", netSalary=" + netSalary + ", paymentDate=" + paymentDate + "]";
 	}
 
 }

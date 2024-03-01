@@ -2,48 +2,56 @@ package com.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SkillUpgradation")
 public class SkillUpgradation {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "UpgradationID")
 	private int upgradationId;
 
-	private int skillName;
+	@ManyToOne
+	@JoinColumn(name = "EmployeeID")
+	private Employees employee;
 
+	@Column(name = "SkillName")
+	private String skillName;
+
+	@Column(name = "PreviousSkillLevel")
 	private int previousSkillLevel;
 
+	@Column(name = "NewSkillLevel")
 	private int newSkillLevel;
 
+	@Column(name = "UpgradationDate")
 	private LocalDate upgradationDate;
 
 	@ManyToOne
-	private Employee employee;
-
-	@ManyToOne
-	private Employee upgradedBy;
+	@JoinColumn(name = "UpgradedBy")
+	private Employees upgradedBy;
 
 	public SkillUpgradation() {
-
+		// TODO Auto-generated constructor stub
 	}
 
-	public SkillUpgradation(int upgradationId, int skillName, int previousSkillLevel, int newSkillLevel,
-			LocalDate upgradationDate, Employee employee, Employee upgradedBy) {
+	public SkillUpgradation(int upgradationId, Employees employee, String skillName, int previousSkillLevel,
+			int newSkillLevel, LocalDate upgradationDate, Employees upgradedBy) {
 		super();
 		this.upgradationId = upgradationId;
+		this.employee = employee;
 		this.skillName = skillName;
 		this.previousSkillLevel = previousSkillLevel;
 		this.newSkillLevel = newSkillLevel;
 		this.upgradationDate = upgradationDate;
-		this.employee = employee;
 		this.upgradedBy = upgradedBy;
 	}
 
@@ -55,11 +63,19 @@ public class SkillUpgradation {
 		this.upgradationId = upgradationId;
 	}
 
-	public int getSkillName() {
+	public Employees getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
+	}
+
+	public String getSkillName() {
 		return skillName;
 	}
 
-	public void setSkillName(int skillName) {
+	public void setSkillName(String skillName) {
 		this.skillName = skillName;
 	}
 
@@ -87,27 +103,19 @@ public class SkillUpgradation {
 		this.upgradationDate = upgradationDate;
 	}
 
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
-	public Employee getUpgradedBy() {
+	public Employees getUpgradedBy() {
 		return upgradedBy;
 	}
 
-	public void setUpgradedBy(Employee upgradedBy) {
+	public void setUpgradedBy(Employees upgradedBy) {
 		this.upgradedBy = upgradedBy;
 	}
 
 	@Override
 	public String toString() {
-		return "SkillUpgradation [upgradationId=" + upgradationId + ", skillName=" + skillName + ", previousSkillLevel="
-				+ previousSkillLevel + ", newSkillLevel=" + newSkillLevel + ", upgradationDate=" + upgradationDate
-				+ ", employee=" + employee + ", upgradedBy=" + upgradedBy + "]";
+		return "SkillUpgradation [upgradationId=" + upgradationId + ", employee=" + employee + ", skillName="
+				+ skillName + ", previousSkillLevel=" + previousSkillLevel + ", newSkillLevel=" + newSkillLevel
+				+ ", upgradationDate=" + upgradationDate + ", upgradedBy=" + upgradedBy + "]";
 	}
 
 }

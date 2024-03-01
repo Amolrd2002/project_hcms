@@ -2,49 +2,64 @@ package com.entity;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "SkillMatrix")
 public class SkillMatrix {
-
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int martrixId;
-
-	private String skillName;
-
-	private int skillLevel;
-
-	private LocalDate date;
-
-	public SkillMatrix() {
-
-	}
-
-	public SkillMatrix(int martrixId, String skillName, int skillLevel, LocalDate date, Employee employee) {
-
-		this.martrixId = martrixId;
-		this.skillName = skillName;
-		this.skillLevel = skillLevel;
-		this.date = date;
-		this.employee = employee;
-	}
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "MatrixID")
+	private int matrixId;
 
 	@ManyToOne
-	private Employee employee;
+	@JoinColumn(name = "EmployeeID")
+	private Employees employee;
 
-	public int getMartrixId() {
-		return martrixId;
+	@Column(name = "SkillName")
+	private String skillName;
+
+	@Column(name = "SkillLevel")
+	private int skillLevel;
+
+	@Column(name = "LastUpdated")
+	private LocalDate lastUpdated;
+
+	// Getters and setters
+	public SkillMatrix() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setMartrixId(int martrixId) {
-		this.martrixId = martrixId;
+	public SkillMatrix(int matrixId, Employees employee, String skillName, int skillLevel, LocalDate lastUpdated) {
+		super();
+		this.matrixId = matrixId;
+		this.employee = employee;
+		this.skillName = skillName;
+		this.skillLevel = skillLevel;
+		this.lastUpdated = lastUpdated;
+	}
+
+	public int getMatrixId() {
+		return matrixId;
+	}
+
+	public void setMatrixId(int matrixId) {
+		this.matrixId = matrixId;
+	}
+
+	public Employees getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employees employee) {
+		this.employee = employee;
 	}
 
 	public String getSkillName() {
@@ -63,26 +78,18 @@ public class SkillMatrix {
 		this.skillLevel = skillLevel;
 	}
 
-	public LocalDate getDate() {
-		return date;
+	public LocalDate getLastUpdated() {
+		return lastUpdated;
 	}
 
-	public void setDate(LocalDate date) {
-		this.date = date;
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
+	public void setLastUpdated(LocalDate lastUpdated) {
+		this.lastUpdated = lastUpdated;
 	}
 
 	@Override
 	public String toString() {
-		return "SkillMatrix [martrixId=" + martrixId + ", skillName=" + skillName + ", skillLevel=" + skillLevel
-				+ ", date=" + date + ", employee=" + employee + "]";
+		return "SkillMatrix [matrixId=" + matrixId + ", employee=" + employee + ", skillName=" + skillName
+				+ ", skillLevel=" + skillLevel + ", lastUpdated=" + lastUpdated + "]";
 	}
 
 }
