@@ -6,5 +6,14 @@ import com.entity.Employees;
 
 public interface EmployeesDAO {
 
-	public abstract  List<Employees> getAllEmployees();
+	List<Employees> getAllEmployees();
+
+	void addEmployee(Employees employee);
+
+	Employees updateEmployee(Employees employee);
+
+	void deleteEmployee(int employeeId);
+
+	Employees getEmployeeById(int employeeId);
+
 }

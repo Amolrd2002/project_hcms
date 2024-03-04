@@ -1,40 +1,81 @@
 package com.dao;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.config.JdbcConfig;
 import com.entity.Employees;
 
+import jakarta.persistence.EntityManager;
+
+
+
+@Repository
+@Transactional
 public class EmployeesDAOImpl implements EmployeesDAO {
 
-//	private HibernateTemplate hibernateTemplate;
 
-	private JdbcTemplate jdbcTemplate;
-
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
-	}
-
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
+	@Autowired
+	private EntityManager entityManager;
 
 	@Override
 	public List<Employees> getAllEmployees() {
-
-//		return this.getJdbcTemplate().queryForList("select * from employees");
-		System.out.println("running");
-		return null;
+		return entityManager.unwrap(Session.class).createQuery("from Employees",Employees.class).getResultList();
 	}
 
-	public static void main(String[] args) {
-		ApplicationContext context = new AnnotationConfigApplicationContext(JdbcConfig.class);
-		EmployeesDAO employeeDAO = context.getBean("employeesDAO", EmployeesDAO.class);
-		employeeDAO.getAllEmployees();
+	@Override
+	public void addEmployee(Employees employee) {
+//		Employees emp1 = new Employees();
+//		emp1.setFirstName(employee.getFirstName());
+//		emp1.setLastName(employee.getLastName());
+//		emp1.setAddress(employee.getAddress());
+//		emp1.setEmail(employee.getEmail());
+//		emp1.setGender(employee.getGender());
+//		emp1.setDateOfBirth(employee.getDateOfBirth());
+//		emp1.setPhone(employee.getPhone());
+//		emp1.setNationalId(employee.getNationalId());
+//		emp1.setMaritalStatus(employee.getMaritalStatus());
+//		emp1.setEmergencyContactName(employee.getEmergencyContactName());
+//		emp1.setEmergencyContactPhone(employee.getEmergencyContactPhone());
+//		emp1.setPosition(employee.getPosition());
+//		emp1.setSkillSet(employee.getSkillSet());
+//		emp1.setEmploymentStartDate(employee.getEmploymentStartDate());
+//		emp1.setEmploymentEndDate(employee.getEmploymentEndDate());
+//		emp1.setSalary(employee.getSalary());
+//		emp1.setEmploymentStatus(employee.getEmploymentStatus());
+//		emp1.setBankAccountNumber(employee.getBankAccountNumber());
+//		emp1.setManager(employee.getManager());
+//		emp1.setRole(employee.getRole());
+//		emp1.setDepartment(employee.getDepartment());
+//		entityManager.unwrap(Session.class).persist(emp1);
+		
+		entityManager.unwrap(Session.class).save(employee) ;
+		 
 	}
+
+	@Override
+	public Employees updateEmployee(Employees employee) {
+		 return entityManager.unwrap(Session.class).merge(employee);
+		
+	}
+
+	@Override
+	public void deleteEmployee(int employeeId) {
+		
+		Employees employee= entityManager.unwrap(Session.class).find(Employees.class, employeeId);
+		entityManager.remove(employee);
+	}
+
+	@Override
+	public Employees getEmployeeById(int employeeId) {
+		return entityManager.unwrap(Session.class).find(Employees.class, employeeId);
+	}
+
+
 
 }
