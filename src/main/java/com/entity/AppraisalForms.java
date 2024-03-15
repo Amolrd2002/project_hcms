@@ -26,7 +26,12 @@ public class AppraisalForms {
 	@Column(name = "SubmissionDate")
 	private LocalDate submissionDate;
 
-	// other fields...
+	@Column(name="Rating")
+	private int rating;
+	
+	@Column(name="Comments")
+	private String comments;
+	
 
 	@ManyToOne
 	@JoinColumn(name = "ReviewerID")
@@ -35,13 +40,21 @@ public class AppraisalForms {
 	// Getters and setters
 	public AppraisalForms() {
 	}
+	
+	
 
-	public AppraisalForms(int formId, Employees employee, LocalDate submissionDate, Employees reviewer) {
+	public AppraisalForms(int formId, Employees employee, LocalDate submissionDate, int rating, String comments,
+			Employees reviewer) {
+	
 		this.formId = formId;
 		this.employee = employee;
 		this.submissionDate = submissionDate;
+		this.rating = rating;
+		this.comments = comments;
 		this.reviewer = reviewer;
 	}
+
+
 
 	public int getFormId() {
 		return formId;
@@ -67,6 +80,22 @@ public class AppraisalForms {
 		this.submissionDate = submissionDate;
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
 	public Employees getReviewer() {
 		return reviewer;
 	}
@@ -78,7 +107,10 @@ public class AppraisalForms {
 	@Override
 	public String toString() {
 		return "AppraisalForms [formId=" + formId + ", employee=" + employee + ", submissionDate=" + submissionDate
-				+ ", reviewer=" + reviewer + "]";
+				+ ", rating=" + rating + ", comments=" + comments + ", reviewer=" + reviewer + "]";
 	}
+
+
+	
 
 }

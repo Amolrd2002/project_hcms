@@ -10,9 +10,9 @@ public interface DepartmentServices {
 
 	void addDepartment(Departments department);
 	
-	Departments updateDepartment(Departments department);
+	void updateDepartment(Departments department);
 
-	void deleteDepartment(int departmentId);
+	Departments deleteDepartment(int departmentId);
 
 	Departments getDepartmentById(int deparmentId);
 }

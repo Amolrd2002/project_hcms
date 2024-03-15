@@ -35,15 +35,16 @@ public class RolesDAOImpl implements RolesDAO {
 	}
 
 	@Override
-	public Roles updateRole(Roles role) {
+	public void updateRole(Roles role) {
+		entityManager.unwrap(Session.class).merge(role);
 		
-		return entityManager.unwrap(Session.class).merge(role);
 	}
 
 	@Override
-	public void deleteRole(int roleId) {
+	public Roles deleteRole(int roleId) {
 		Roles role =  entityManager.unwrap(Session.class).find(Roles.class,roleId );
 		entityManager.remove(role);
+		return role;
 		
 	}
 

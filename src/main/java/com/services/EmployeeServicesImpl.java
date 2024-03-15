@@ -26,15 +26,15 @@ public class EmployeeServicesImpl implements EmployeeServices {
 	}
 
 	@Override
-	public Employees updateEmployee(Employees employee) {
-		return employeeDAO.updateEmployee(employee);
+	public void updateEmployee(Employees employee) {
+		 employeeDAO.updateEmployee(employee);
 		
 	}
 
 	@Override
-	public void deleteEmployee(int employeeId) {
+	public Employees deleteEmployee(int employeeId) {
 		
-		employeeDAO.deleteEmployee(employeeId);
+		 return employeeDAO.deleteEmployee(employeeId);
 	}
 
 	@Override

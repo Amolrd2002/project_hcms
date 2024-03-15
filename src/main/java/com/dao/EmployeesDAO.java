@@ -10,9 +10,9 @@ public interface EmployeesDAO {
 
 	void addEmployee(Employees employee);
 
-	Employees updateEmployee(Employees employee);
+	void updateEmployee(Employees employee);
 
-	void deleteEmployee(int employeeId);
+	Employees deleteEmployee(int employeeId);
 
 	Employees getEmployeeById(int employeeId);
 

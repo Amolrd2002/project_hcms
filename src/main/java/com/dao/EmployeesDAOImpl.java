@@ -59,16 +59,17 @@ public class EmployeesDAOImpl implements EmployeesDAO {
 	}
 
 	@Override
-	public Employees updateEmployee(Employees employee) {
-		 return entityManager.unwrap(Session.class).merge(employee);
+	public void updateEmployee(Employees employee) {
+		  entityManager.unwrap(Session.class).merge(employee);
 		
 	}
 
 	@Override
-	public void deleteEmployee(int employeeId) {
+	public Employees deleteEmployee(int employeeId) {
 		
 		Employees employee= entityManager.unwrap(Session.class).find(Employees.class, employeeId);
 		entityManager.remove(employee);
+		return employee;
 	}
 
 	@Override

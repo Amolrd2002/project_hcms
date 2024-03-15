@@ -26,14 +26,14 @@ public class RoleServicesImpl implements RolesService {
 	}
 
 	@Override
-	public Roles updateRole(Roles role) {
-		return rolesDAO.updateRole(role);
+	public void updateRole(Roles role) {
+		 rolesDAO.updateRole(role);
 		
 	}
 
 	@Override
-	public void deleteRole(int roleId) {
-		rolesDAO.deleteRole(roleId);
+	public Roles deleteRole(int roleId) {
+		return rolesDAO.deleteRole(roleId);
 		
 	}
 

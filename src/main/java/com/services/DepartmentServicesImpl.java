@@ -27,14 +27,14 @@ public class DepartmentServicesImpl implements DepartmentServices {
 	}
 
 	@Override
-	public Departments updateDepartment(Departments department) {
+	public void updateDepartment(Departments department) {
 		
-		return departmentDAO.updateDepartment(department);
+		 departmentDAO.updateDepartment(department);
 	}
 
 	@Override
-	public void deleteDepartment(int departmentId) {
-		departmentDAO.deleteDepartment(departmentId);
+	public Departments deleteDepartment(int departmentId) {
+		 return departmentDAO.deleteDepartment(departmentId);
 		
 	}
 
